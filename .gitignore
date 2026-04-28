@@ -1,1 +1,10 @@
 /bin/
+
+# DB 설정 파일
+db.properties
+
+# 이클립스 설정 파일들
+.classpath
+.project
+.settings/
+bin/
