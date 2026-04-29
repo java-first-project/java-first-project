@@ -24,6 +24,7 @@ implements ActionListener
     	add(mp);
     	add(cp);
     	
+    
     	setSize(1024, 700);
     	setVisible(true);
     	mp.b3.addActionListener(this);
