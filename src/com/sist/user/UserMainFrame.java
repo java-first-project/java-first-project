@@ -109,6 +109,10 @@ implements ActionListener
 				UserMainFrame.isAdmin=vo.getIsadmin().charAt(0);
 				mp.init();
 				login.setVisible(false);
+				if(vo.getIsadmin().equals("y"))
+				{
+					cp.card.show(cp, "ADMIN");
+				}
 			}
 		}
 		else if(e.getSource()==mp.b6)

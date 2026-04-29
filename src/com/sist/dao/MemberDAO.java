@@ -276,4 +276,112 @@ public class MemberDAO {
 		  return vo;
 	  }
 	  // => 메인 출력 
+	  public List<MemberVO> memberListData()
+	  {
+		  List<MemberVO> list=
+				  new ArrayList<MemberVO>();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT m.id,name,sex,addr1,phone,grade "
+					    +"FROM member m JOIN grades g "
+					    +"ON m.id=g.id "
+					    +"AND m.isadmin<>'y'";
+			  ps=conn.prepareStatement(sql);
+			  ResultSet rs=ps.executeQuery();
+			  while(rs.next())
+			  {
+				  MemberVO vo=
+						  new MemberVO();
+				  vo.setId(rs.getString(1));
+				  vo.setName(rs.getString(2));
+				  vo.setSex(rs.getString(3));
+				  vo.setAddr1(rs.getString(4));
+				  vo.setPhone(rs.getString(5));
+				  vo.setGrade(rs.getString(6));
+				  list.add(vo);
+			  }
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return list;
+	  }
+	  public List<String> memberGetId()
+	  {
+		  List<String> list=
+				  new ArrayList<String>();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT id "
+					    +"FROM member";
+			  // 0 , 1 
+			  ps=conn.prepareStatement(sql);
+			  
+			  ResultSet rs=ps.executeQuery();
+			  while(rs.next())
+			  {
+				  list.add(rs.getString(1));
+			  }
+			  rs.close();
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return list;
+	  }
+	  public void gradeInsert(String id,String grade)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="INSERT INTO grades "
+					    +"VALUES(?,?)";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, id);
+			  ps.setString(2, grade);
+			  ps.executeUpdate();
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
+	  
+	  public void gradeUpdate(String id,String grade)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="UPDATE grades SET "
+					    +"grade=? "
+					    +"WHERE id=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, grade);
+			  ps.setString(2, id);
+			  ps.executeUpdate();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
 }
