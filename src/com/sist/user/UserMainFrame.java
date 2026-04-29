@@ -30,7 +30,7 @@ implements ActionListener
     	mp.b2.addActionListener(this);
     	mp.b1.addActionListener(this);
     	mp.b6.addActionListener(this);
-    	mp.b8.addActionListener(this);
+    	mp.b4.addActionListener(this);// 마이페이지
     	// login
     	login.b1.addActionListener(this);// 로그인 
     	login.b2.addActionListener(this);// 취소 
@@ -108,6 +108,7 @@ implements ActionListener
 				setTitle(title);
 				UserMainFrame.bLogin=true;
 				UserMainFrame.isAdmin=vo.getIsadmin().charAt(0);
+				cp.myId=vo.getId();
 				mp.init();
 				login.setVisible(false);
 				if(vo.getIsadmin().equals("y"))
@@ -121,8 +122,10 @@ implements ActionListener
 			dispose();
 			System.exit(0);
 		}
-		else if(e.getSource()==mp.b8) {
-			cp.card.show(cp, "BLIST");
+		else if(e.getSource()==mp.b4)
+		{
+			cp.card.show(cp, "MYPAGE");
+			cp.mf.print();
 		}
 		
 	}
