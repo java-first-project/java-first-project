@@ -13,6 +13,10 @@ public class ControlPanel extends JPanel{
 	GoodsDetailForm gdf;
 	JoinPanel jp;
 	AdminPageForm af;
+	BoardList bList;
+	BoardInsert bInsert;
+	BoardDetail bDetail;
+	BoardDelete bDelete;
 	CardLayout card=new CardLayout();
 	String myId;
     public ControlPanel()
@@ -23,9 +27,17 @@ public class ControlPanel extends JPanel{
     	gdf=new GoodsDetailForm(this);
     	jp=new JoinPanel(this);
     	af=new AdminPageForm(this);
+    	bList=new BoardList(this);
+    	bInsert=new BoardInsert(this);
+    	bDetail=new BoardDetail(this);
+    	bDelete=new BoardDelete(this);
     	add("HOME",hp);
     	add("DETAIL",gdf);
     	add("JOIN",jp);
     	add("ADMIN",af);
+    	add("BLIST",bList);
+    	add("BINSERT",bInsert);
+    	add("BDETAIL",bDetail);
+    	add("BDELETE",bDelete);
     }
 }

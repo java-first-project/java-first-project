@@ -30,6 +30,7 @@ implements ActionListener
     	mp.b2.addActionListener(this);
     	mp.b1.addActionListener(this);
     	mp.b6.addActionListener(this);
+    	mp.b8.addActionListener(this);
     	// login
     	login.b1.addActionListener(this);// 로그인 
     	login.b2.addActionListener(this);// 취소 
@@ -119,6 +120,9 @@ implements ActionListener
 		{
 			dispose();
 			System.exit(0);
+		}
+		else if(e.getSource()==mp.b8) {
+			cp.card.show(cp, "BLIST");
 		}
 		
 	}
