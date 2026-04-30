@@ -96,5 +96,10 @@ implements ActionListener
 			cp.bDelete.pf.setText("");
 			cp.card.show(cp, "BDELETE");
 		}
+		else if(e.getSource()==b1)
+		{
+			cp.bDelete.pf.setText("");
+			cp.card.show(cp, "BEDIT");
+		}
 	 }
 }
