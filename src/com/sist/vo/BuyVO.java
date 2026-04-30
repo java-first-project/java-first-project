@@ -5,6 +5,7 @@ import java.util.*;
 import lombok.Data;
 @Data
 public class BuyVO {
+
    private int no,type,gno,account,price;
    private String id,dbday;
    private Date regdate;

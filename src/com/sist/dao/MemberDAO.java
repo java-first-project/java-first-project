@@ -283,10 +283,9 @@ public class MemberDAO {
 		  try
 		  {
 			  getConnection();
-			  String sql="SELECT m.id,name,sex,addr1,phone,grade "
-					    +"FROM member m JOIN grades g "
-					    +"ON m.id=g.id "
-					    +"AND m.isadmin<>'y'";
+			  String sql="SELECT id,name,sex,addr1,phone,grade "
+			          +"FROM member "
+			          +"WHERE isadmin<>'y'";
 			  ps=conn.prepareStatement(sql);
 			  ResultSet rs=ps.executeQuery();
 			  while(rs.next())
@@ -341,36 +340,36 @@ public class MemberDAO {
 		  }
 		  return list;
 	  }
-	  public void gradeInsert(String id,String grade)
-	  {
-		  try
-		  {
-			  getConnection();
-			  String sql="INSERT INTO grades "
-					    +"VALUES(?,?)";
-			  ps=conn.prepareStatement(sql);
-			  ps.setString(1, id);
-			  ps.setString(2, grade);
-			  ps.executeUpdate();
-			  
-		  }catch(Exception ex)
-		  {
-			  ex.printStackTrace();
-		  }
-		  finally
-		  {
-			  disConnection();
-		  }
-	  }
-	  
+//	  public void gradeInsert(String id,String grade)
+//	  {
+//		  try
+//		  {
+//			  getConnection();
+//			  String sql="INSERT INTO grades "
+//					    +"VALUES(?,?)";
+//			  ps=conn.prepareStatement(sql);
+//			  ps.setString(1, id);
+//			  ps.setString(2, grade);
+//			  ps.executeUpdate();
+//			  
+//		  }catch(Exception ex)
+//		  {
+//			  ex.printStackTrace();
+//		  }
+//		  finally
+//		  {
+//			  disConnection();
+//		  }
+//	  }
+//	  
 	  public void gradeUpdate(String id,String grade)
 	  {
 		  try
 		  {
 			  getConnection();
-			  String sql="UPDATE grades SET "
-					    +"grade=? "
-					    +"WHERE id=?";
+			  String sql="UPDATE member SET "
+	                  +"grade=? "
+	                  +"WHERE id=?";
 			  ps=conn.prepareStatement(sql);
 			  ps.setString(1, grade);
 			  ps.setString(2, id);

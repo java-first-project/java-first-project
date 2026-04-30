@@ -30,6 +30,7 @@ implements ActionListener
     	mp.b3.addActionListener(this);
     	mp.b2.addActionListener(this);
     	mp.b1.addActionListener(this);
+    	mp.b7.addActionListener(this); //로그아웃
     	mp.b6.addActionListener(this);
     	mp.b8.addActionListener(this);
     	mp.b4.addActionListener(this);// 마이페이지
@@ -118,6 +119,16 @@ implements ActionListener
 					cp.card.show(cp, "ADMIN");
 				}
 			}
+		}
+		//로그아웃
+		else if(e.getSource()==mp.b7)
+		{
+		    UserMainFrame.bLogin = false;
+		    UserMainFrame.isAdmin = 'n';
+		    cp.myId = "";
+		    setTitle(""); 
+		    mp.init();   
+		    cp.card.show(cp, "HOME");
 		}
 		else if(e.getSource()==mp.b6)
 		{

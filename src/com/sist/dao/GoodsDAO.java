@@ -8,6 +8,9 @@ public class GoodsDAO {
   // 전체적으로 사용 
   private Connection conn; // Socket => 연결 담당 
   private PreparedStatement ps; // BufferedReader , OutputStream 
+  
+  
+  
   // 송(SQL문장) 수신(오라클에서 결과값 받기)
   private final String URL="jdbc:oracle:thin:@localhost:1521:XE";
   private String[] tables={

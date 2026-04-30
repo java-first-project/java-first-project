@@ -60,7 +60,7 @@ public class BoardDAO {
 		try {
 			getConnection();
 			// SQL문장을 오라클 전송
-			String sql = "SELECT /*+ INDEX_DESC(board board_no_pk)*/ no,subject,name,TO_CHAR(regdate,'YYYY-MM-DD'),hit "
+			String sql = "SELECT no,subject,name,TO_CHAR(regdate,'YYYY-MM-DD'),hit "
 					+ "FROM board " + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
 			int start = (page * 10) - 10;
 			// 전송

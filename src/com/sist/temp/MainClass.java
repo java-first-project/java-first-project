@@ -10,7 +10,7 @@ public class MainClass {
         String[] grades={"BRONZE", "SILVER", "GOLD", "DIAMOND"};
         for(String id:list)
         {
-        	dao.gradeInsert(id, grades[(int)(Math.random()*4)]);
+//        	dao.gradeInsert(id, grades[(int)(Math.random()*4)]);
         }
         System.out.println("완료");
 	}
