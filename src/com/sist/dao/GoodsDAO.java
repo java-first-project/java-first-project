@@ -1,4 +1,5 @@
 package com.sist.dao;
+import java.io.FileInputStream;
 import java.sql.*;
 import java.util.*;
 
@@ -6,40 +7,51 @@ import com.sist.vo.BuyVO;
 import com.sist.vo.GoodsVO;
 public class GoodsDAO {
   // 전체적으로 사용 
-  private Connection conn; // Socket => 연결 담당 
-  private PreparedStatement ps; // BufferedReader , OutputStream 
-  
-  
-  
-  // 송(SQL문장) 수신(오라클에서 결과값 받기)
-  private final String URL="jdbc:oracle:thin:@localhost:1521:XE";
-  private String[] tables={
-		  "",
-		  "goods_all",
-		  "goods_best",
-		  "goods_new",
-		  "goods_special"
-  };
-  // 1. 드라이버 등록 
-  public GoodsDAO()
-  {
-	  try
-	  {
-		  Class.forName("oracle.jdbc.driver.OracleDriver");
-	  }catch(Exception ex)
-	  {
-		  ex.printStackTrace();
-	  }
-  }
-  // 2. 오라클 연결 
-  public void getConnection()
-  {
-	  try
-	  {
-		  conn=DriverManager.getConnection(URL,"hr",
-				         "happy");
-	  }catch(Exception ex) {}
-  }
+	// 전체적으로 사용 
+		  private Connection conn; // Socket => 연결 담당 
+		  private PreparedStatement ps; // BufferedReader , OutputStream 
+		  
+		  private String url;
+		  private String user;
+		  private String pwd;
+		  
+		  private String[] tables={
+				  "",
+				  "goods_all",
+				  "goods_best",
+				  "goods_new",
+				  "goods_special"
+		  };
+		  
+		  // 1. 드라이버 등록 
+		  public GoodsDAO()
+		  {
+			  try
+			  {
+				  Properties prop = new Properties();
+		          FileInputStream fis = new FileInputStream("db.properties");
+		          prop.load(fis);
+		          fis.close(); // 파일 읽기 후 닫기
+
+		          // B. 로드된 파일에서 정보 추출
+		          this.url = prop.getProperty("db.url");
+		          this.user = prop.getProperty("db.user");
+		          this.pwd = prop.getProperty("db.password");
+				  
+				  Class.forName("oracle.jdbc.driver.OracleDriver");
+			  }catch(Exception ex)
+			  {
+				  ex.printStackTrace();
+			  }
+		  }
+		  // 2. 오라클 연결 
+		  public void getConnection()
+		  {
+			  try
+			  {
+				  conn=DriverManager.getConnection(url,user,pwd);
+			  }catch(Exception ex) {}
+		  }
   // 3. 오라클 연결 해제 
   public void disConnection()
   {
