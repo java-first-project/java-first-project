@@ -34,6 +34,7 @@ public class ControlPanel extends JPanel{
     	bInsert=new BoardInsert(this);
     	bDetail=new BoardDetail(this);
     	bDelete=new BoardDelete(this);
+    	bEdit=new BoardEdit(this);
     	add("HOME",hp);
     	add("DETAIL",gdf);
     	add("JOIN",jp);
