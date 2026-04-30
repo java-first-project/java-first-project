@@ -70,6 +70,7 @@ implements ActionListener
     	 
     	 b3.addActionListener(this);
     	 b2.addActionListener(this);
+    	 b1.addActionListener(this);
      }
      public void print(int num)
      {
