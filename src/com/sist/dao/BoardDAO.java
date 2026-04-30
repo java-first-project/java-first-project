@@ -216,6 +216,61 @@ public class BoardDAO {
 		}
 		return bCheck;
 	}
+	
+	public boolean board_edit_check(int no, String pwd) {
+		boolean bCheck = false; // => 비번
+		try {
+			// 연결
+			getConnection();
+			// SQL 전송
+			String sql = "SELECT pwd FROM board WHERE no=?";
+			ps = conn.prepareStatement(sql);
+			// ?을 값을 채운다
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String db_pwd = rs.getString(1);
+			rs.close();
+
+			if (db_pwd.equals(pwd)) // 본인
+			{
+				bCheck = true;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return bCheck;
+	}
+
+	public void board_edit(BoardVO vo) {
+		try {
+			// 1. 연결
+			getConnection();
+			// 2. SQL문장 만들기
+			String sql = "UPDATE board SET name = ?, subject = ?, content = ?, pwd = ? WHERE no = ?";
+			// 3. 전송
+			ps = conn.prepareStatement(sql);
+			// 4. 실행전에 ?에 값을 채운다
+			ps.setString(1, vo.getName());
+			ps.setString(2, vo.getSubject());
+			ps.setString(3, vo.getContent());
+			ps.setString(4, vo.getPwd());
+			ps.setInt(5, vo.getNo());
+			ps.executeUpdate(); // 데이터베이스 변경
+			// => COMMIT 포함 => 자바 AutoCommit()
+			// INSERT / UPDATE / DELETE
+			// SELECT => executeQuery()
+			/*
+			 * INSERT INSERT ==>error => 트랜잭션 INSERT
+			 */
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			disConnection();
+		}
+	}
 
 	public static BoardDAO newInstance() {
 		if (dao == null)

@@ -18,6 +18,7 @@ public class ControlPanel extends JPanel{
 	BoardInsert bInsert;
 	BoardDetail bDetail;
 	BoardDelete bDelete;
+	BoardEdit bEdit;
 	CardLayout card=new CardLayout();
 	String myId;
     public ControlPanel()
@@ -42,5 +43,6 @@ public class ControlPanel extends JPanel{
     	add("BINSERT",bInsert);
     	add("BDETAIL",bDetail);
     	add("BDELETE",bDelete);
+    	add("BEDIT", bEdit);
     }
 }
