@@ -212,7 +212,7 @@ public class GoodsDAO {
 	  {
 	     getConnection();
 	     String sql="INSERT INTO buy VALUES("
-	    		   +"buy_no_seq.nextval,?,?,?,?,?,SYSDATE)";
+	    		   +"buy_no_seq.nextval,?,?,?,?,?,SYSDATE,'결제완료')";
 	     ps=conn.prepareStatement(sql);
 	     ps.setString(1, vo.getId());
 	     ps.setInt(2,vo.getType());

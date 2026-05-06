@@ -121,7 +121,7 @@ public class BuyDAO {
             String sql = "SELECT id, COUNT(*) as buy_count, SUM(price) as total_pay "
                        + "FROM buy "
                        + "GROUP BY id "
-                       + "ORDER BY buy_count DESC"; // 구매 횟수가 높은 순서대로 내림차순 정렬
+                       + "ORDER BY total_pay DESC"; // 구매 횟수가 높은 순서대로 내림차순 정렬
                        
             ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
