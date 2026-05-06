@@ -34,6 +34,7 @@ implements ActionListener
     	mp.b6.addActionListener(this);
     	mp.b8.addActionListener(this);
     	mp.b4.addActionListener(this);// 마이페이지
+    	mp.b5.addActionListener(this); // 관리자페이지
     	// login
     	login.b1.addActionListener(this);// 로그인 
     	login.b2.addActionListener(this);// 취소 
@@ -119,6 +120,10 @@ implements ActionListener
 					cp.card.show(cp, "ADMIN");
 				}
 			}
+		}
+		else if(e.getSource()==mp.b5) // 관리자페이지
+		{
+			cp.card.show(cp, "ADMIN");
 		}
 		//로그아웃
 		else if(e.getSource()==mp.b7)

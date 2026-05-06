@@ -10,16 +10,19 @@ public class AdminPageForm extends JPanel{
     ControlPanel cp;
     MemberControlForm mcf=new MemberControlForm();
     BuyControlForm bcf=new BuyControlForm(); 
+    GoodsControlForm gcf = new GoodsControlForm();
+    MemberFindForm mff = new MemberFindForm();
+    BuyStatisticsForm bsf = new BuyStatisticsForm();
     public AdminPageForm(ControlPanel cp)
     {
     	this.cp=cp;
     	// JPanel : FlowLayout 
     	setLayout(null);
     	tp.addTab("회원관리", mcf);
-    	tp.addTab("회원검색", new JPanel());
-    	tp.addTab("상품관리", new JPanel());
+    	tp.addTab("회원검색", mff);
+    	tp.addTab("상품관리", gcf);
     	tp.addTab("구매관리", bcf);
-    	tp.addTab("등급관리", new JPanel());
+    	tp.addTab("구매통계", bsf);
     	tp.setTabPlacement(tp.LEFT);
     	tp.setBounds(10,15,920,480);
     	add(tp);

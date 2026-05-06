@@ -7,7 +7,8 @@ import lombok.Data;
 public class BuyVO {
 
    private int no,type,gno,account,price;
-   private String id,dbday;
+   private String id,dbday,status;
+
    private Date regdate;
    private GoodsVO gvo=new GoodsVO();
 }

@@ -275,71 +275,116 @@ public class MemberDAO {
 		  }
 		  return vo;
 	  }
-	  // => 메인 출력 
-	  public List<MemberVO> memberListData()
+	  
+	  //회원조회
+	  public List<MemberVO> memberListData(int page)
 	  {
-		  List<MemberVO> list=
-				  new ArrayList<MemberVO>();
-		  try
-		  {
-			  getConnection();
-			  String sql="SELECT id,name,sex,addr1,phone,grade "
-			          +"FROM member "
-			          +"WHERE isadmin<>'y'";
-			  ps=conn.prepareStatement(sql);
-			  ResultSet rs=ps.executeQuery();
-			  while(rs.next())
-			  {
-				  MemberVO vo=
-						  new MemberVO();
-				  vo.setId(rs.getString(1));
-				  vo.setName(rs.getString(2));
-				  vo.setSex(rs.getString(3));
-				  vo.setAddr1(rs.getString(4));
-				  vo.setPhone(rs.getString(5));
-				  vo.setGrade(rs.getString(6));
-				  list.add(vo);
-			  }
-			  rs.close();
-		  }catch(Exception ex)
-		  {
-			  ex.printStackTrace();
-		  }
-		  finally
-		  {
-			  disConnection();
-		  }
-		  return list;
+	      List<MemberVO> list = new ArrayList<MemberVO>();
+	      try
+	      {
+	          getConnection();
+	          String sql = "SELECT id, name, sex, addr1, phone, grade "
+	                     + "FROM member "
+	                     + "WHERE isadmin <> 'y' "
+	                     + "ORDER BY id ASC "
+	                     + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+	          ps = conn.prepareStatement(sql);
+	          ps.setInt(1, (page * 10) - 10);
+	          ResultSet rs = ps.executeQuery();
+	          while(rs.next())
+	          {
+	              MemberVO vo = new MemberVO();
+	              vo.setId(rs.getString(1));
+	              vo.setName(rs.getString(2));
+	              vo.setSex(rs.getString(3));
+	              vo.setAddr1(rs.getString(4));
+	              vo.setPhone(rs.getString(5));
+	              vo.setGrade(rs.getString(6));
+	              list.add(vo);
+	          }
+	          rs.close();
+	      }catch(Exception ex)
+	      {
+	          ex.printStackTrace();
+	      }
+	      finally
+	      {
+	          disConnection();
+	      }
+	      return list;
 	  }
-	  public List<String> memberGetId()
+	  
+	  public int memberTotalPage()
 	  {
-		  List<String> list=
-				  new ArrayList<String>();
-		  try
-		  {
-			  getConnection();
-			  String sql="SELECT id "
-					    +"FROM member";
-			  // 0 , 1 
-			  ps=conn.prepareStatement(sql);
-			  
-			  ResultSet rs=ps.executeQuery();
-			  while(rs.next())
-			  {
-				  list.add(rs.getString(1));
-			  }
-			  rs.close();
-			  
-		  }catch(Exception ex)
-		  {
-			  ex.printStackTrace();
-		  }
-		  finally
-		  {
-			  disConnection();
-		  }
-		  return list;
+	      int total = 0;
+	      try
+	      {
+	          getConnection();
+	          String sql = "SELECT CEIL(COUNT(*)/10.0) "
+	                     + "FROM member "
+	                     + "WHERE isadmin <> 'y'";
+	          ps = conn.prepareStatement(sql);
+	          ResultSet rs = ps.executeQuery();
+	          rs.next();
+	          total = rs.getInt(1);
+	          rs.close();
+	      }catch(Exception ex)
+	      {
+	          ex.printStackTrace();
+	      }
+	      finally
+	      {
+	          disConnection();
+	      }
+	      return total;
 	  }
+	  
+	  //회원삭제
+	  public void memberDelete(String id)
+	  {
+	      try
+	      {
+	          getConnection();
+	          String sql = "DELETE FROM member WHERE id=?";
+	          ps = conn.prepareStatement(sql);
+	          ps.setString(1, id);
+	          ps.executeUpdate();
+	      }catch(Exception ex)
+	      {
+	          ex.printStackTrace();
+	      }
+	      finally
+	      {
+	          disConnection();
+	      }
+	  }
+	  
+	  //회원등록
+	  public void memberInsert(MemberVO vo)
+	  {
+	      try
+	      {
+	          getConnection();
+	          String sql = "INSERT INTO member(id, pwd, name, sex, post, addr1, phone, grade, isadmin, regdate) "
+	                     + "VALUES(?, '1234', ?, ?, '00000', ?, ?, ?, 'n', SYSDATE)";
+	          ps = conn.prepareStatement(sql);
+	          ps.setString(1, vo.getId());
+	          ps.setString(2, vo.getName());
+	          ps.setString(3, vo.getSex());
+	          ps.setString(4, vo.getAddr1());
+	          ps.setString(5, vo.getPhone());
+	          ps.setString(6, vo.getGrade());
+	          ps.executeUpdate();
+	      }catch(Exception ex)
+	      {
+	          ex.printStackTrace();
+	      }
+	      finally
+	      {
+	          disConnection();
+	      }
+	  }
+	  
 //	  public void gradeInsert(String id,String grade)
 //	  {
 //		  try
@@ -383,4 +428,42 @@ public class MemberDAO {
 			  disConnection();
 		  }
 	  }
+	  
+	  public List<MemberVO> memberFind(String col, String fd)
+	  {
+	      List<MemberVO> list = new ArrayList<MemberVO>();
+	      try
+	      {
+	          getConnection();
+			  String sql="SELECT id,name,sex,addr1,phone,grade "
+			          +"FROM member "
+			          +"WHERE isadmin<>'y' "
+			          +"AND " + col + " LIKE ?";
+	          ps = conn.prepareStatement(sql);
+	          ps.setString(1, "%" + fd + "%");
+	          ResultSet rs = ps.executeQuery();
+	          while(rs.next())
+	          {
+	              MemberVO vo = new MemberVO();
+	              vo.setId(rs.getString(1));
+	              vo.setName(rs.getString(2));
+	              vo.setSex(rs.getString(3));
+	              vo.setAddr1(rs.getString(4));
+	              vo.setPhone(rs.getString(5));
+	              vo.setGrade(rs.getString(6));
+	              list.add(vo);
+	          }
+	          rs.close();
+	      }catch(Exception ex)
+	      {
+	          ex.printStackTrace();
+	      }
+	      finally
+	      {
+	          disConnection();
+	      }
+	      return list;
+	  }
+	  
+	  
 }

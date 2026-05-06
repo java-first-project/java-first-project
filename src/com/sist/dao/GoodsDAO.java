@@ -297,4 +297,91 @@ public class GoodsDAO {
 		  disConnection();
 	  }
   }
+  
+  
+  //관리자용 목록조회
+  public List<GoodsVO> goodsAllList(){
+	  List<GoodsVO> list = new ArrayList<GoodsVO>();
+	  
+	  try {
+		  getConnection();
+		  String sql = "SELECT no, goods_poster, goods_name, goods_sub, goods_price, goods_discount, goods_first_price, goods_delivery, hit "
+		  		+ "FROM goods_all"
+		  		+ " ORDER BY no ASC";
+		  ps = conn.prepareStatement(sql);
+		  ResultSet rs = ps.executeQuery();
+		  while(rs.next()) {
+			  GoodsVO vo = new GoodsVO();
+			  vo.setNo(rs.getInt(1));
+			  vo.setGoods_poster(rs.getString(2));
+			  vo.setGoods_name(rs.getString(3));
+	          vo.setGoods_sub(rs.getString(4));
+	          vo.setGoods_price(rs.getString(5));
+	          vo.setGoods_discount(rs.getInt(6));
+	          vo.setGoods_first_price(rs.getString(7));
+	          vo.setGoods_delivery(rs.getString(8));
+	          vo.setHit(rs.getInt(9));
+	          list.add(vo);
+		  }
+		  rs.close();
+	  }catch(Exception ex) {
+		  ex.printStackTrace();
+	  } finally
+	  {
+	      disConnection();
+	  }
+	  return list;
+  }
+  
+  //상품 등록
+  public void goodsInsert(GoodsVO vo)
+  {
+      try
+      {
+          getConnection();
+          String sql = "INSERT INTO goods_all"
+                  + "(no, goods_name, goods_sub, goods_price, goods_discount,"
+                  + " goods_first_price, goods_delivery, goods_poster, hit)"
+                  + " VALUES(goods_no_seq.nextval,?,?,?,?,?,?,?,0)";          ps = conn.prepareStatement(sql);
+          ps.setString(1, vo.getGoods_name());
+          ps.setString(2, vo.getGoods_sub());
+          ps.setString(3, vo.getGoods_price());
+          ps.setInt(4,    vo.getGoods_discount());
+          ps.setString(5, vo.getGoods_first_price());
+          ps.setString(6, vo.getGoods_delivery());
+          ps.setString(7, vo.getGoods_poster());
+          ps.executeUpdate();
+      }catch(Exception ex)
+      {
+          ex.printStackTrace();
+      }
+      finally
+      {
+          disConnection();
+      }
+  }
+  
+  //상품 삭제
+  public void goodsDelete(int no)
+  {
+      try
+      {
+          getConnection();
+          String[] tables = {"goods_all", "goods_best", "goods_new", "goods_special"};
+          for(String table : tables)
+          {
+              String sql = "DELETE FROM " + table + " WHERE no=?";
+              ps = conn.prepareStatement(sql);
+              ps.setInt(1, no);
+              ps.executeUpdate();
+          }
+      }catch(Exception ex)
+      {
+          ex.printStackTrace();
+      }
+      finally
+      {
+          disConnection();
+      }
+  }
 }

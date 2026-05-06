@@ -39,7 +39,7 @@ public class BuyDAO {
         List<BuyVO> list = new ArrayList<BuyVO>();
         try {
             getConnection();
-            String sql = "SELECT no, id, gno, account, price,regdate as dbday "
+            String sql = "SELECT no, id, gno, account, price,regdate as dbday, status "
                        + "FROM buy "
                        + "ORDER BY no DESC";
             ps = conn.prepareStatement(sql);
@@ -52,6 +52,7 @@ public class BuyDAO {
                 vo.setAccount(rs.getInt(4));
                 vo.setPrice(rs.getInt(5));
                 vo.setDbday(rs.getString(6));
+                vo.setStatus(rs.getString(7));
                 list.add(vo);
             }
             rs.close();
@@ -86,5 +87,28 @@ public class BuyDAO {
         } catch(Exception ex) { ex.printStackTrace(); }
         finally { disConnection(); }
         return list;
+    }
+    
+    //구매 상태 업데이트
+    public void buyStatusUpdate(int no, String status)
+    {
+        try
+        {
+            getConnection();
+            String sql = "UPDATE buy "
+                       + "SET status=? "
+                       + "WHERE no=?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setInt(2, no);
+            ps.executeUpdate();
+        }catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            disConnection();
+        }
     }
 }
