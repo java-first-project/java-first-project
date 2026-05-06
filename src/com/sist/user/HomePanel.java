@@ -101,6 +101,16 @@ implements ActionListener,MouseListener
 	   }
 	   la.setText(curpage+" page / "+totalpage+" pages");
    }
+   
+   public void refresh() {
+	    this.type = 1;       // 전체 상품 탭으로 맞춤
+	    this.curpage = 1;    // 1페이지로 이동
+	    init();              // 화면 초기화 (라벨 지우기)
+	    print();             // DB 최신 데이터 가져와서 그리기
+	    revalidate();        // 패널 레이아웃 재배치
+	    repaint();           // 화면 다시 그리기
+	}
+   
    @Override
    public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub

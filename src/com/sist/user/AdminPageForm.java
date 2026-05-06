@@ -10,13 +10,17 @@ public class AdminPageForm extends JPanel{
     ControlPanel cp;
     MemberControlForm mcf=new MemberControlForm();
     BuyControlForm bcf=new BuyControlForm(); 
-    GoodsControlForm gcf = new GoodsControlForm();
+    
+    GoodsControlForm gcf;
+    
     MemberFindForm mff = new MemberFindForm();
     BuyStatisticsForm bsf = new BuyStatisticsForm();
+    
     public AdminPageForm(ControlPanel cp)
     {
     	this.cp=cp;
     	// JPanel : FlowLayout 
+    	gcf = new GoodsControlForm(cp);
     	setLayout(null);
     	tp.addTab("회원관리", mcf);
     	tp.addTab("회원검색", mff);

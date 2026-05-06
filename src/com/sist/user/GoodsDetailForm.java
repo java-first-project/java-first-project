@@ -134,22 +134,22 @@ implements ActionListener
 			BuyVO vo=new BuyVO();
 			vo.setGno(gno);
 			vo.setType(type);
-			// id , 수량 , 가격
 			vo.setId(cp.myId);
-			// 수량
+			
 			int account=(int)box.getSelectedItem();
 			vo.setAccount(account);
+			
 			String p=price.getText();
 			p=p.replaceAll("[^0-9]","");
-			// 35,000원 => 35000
-			/*
-			 * 
-			 *  [^0-9] 숫자를 제외
-			 *  ^[0-9] 숫자로 시작
-			 */
 			vo.setPrice(Integer.parseInt(p));
+			
+			// 1. DB에 구매 정보 저장
 			dao.goodsBuyData(vo);
+			
+			
 			JOptionPane.showMessageDialog(this,"구매되었습니다!!");
+			
+			// 3. 화면 이동 및 마이페이지 새로고침
 			cp.card.show(cp,"MYPAGE");
 			cp.mf.print();
 		}

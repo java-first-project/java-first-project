@@ -15,7 +15,9 @@ public class GoodsControlForm extends JPanel implements MouseListener {
     DefaultTableModel model;
     GoodsDAO dao = new GoodsDAO();
     
-    public GoodsControlForm()
+    ControlPanel cp;
+    
+    public GoodsControlForm(ControlPanel cp)
     {
         String[] col = {"NO", "상품명", "설명", "가격", "할인율", "정가", "배송비", "조회수"};
         String[][] row = new String[0][8];
@@ -42,7 +44,23 @@ public class GoodsControlForm extends JPanel implements MouseListener {
         table.addMouseListener(this);
         
         btnAdd.addActionListener(e -> {
-            //추후연결
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            GoodsInsertDialog dialog = new GoodsInsertDialog(topFrame);
+            
+            dialog.setVisible(true); // 입력창 띄우기
+            
+            // 다이얼로그에서 '등록'을 누르고 창이 닫혔을 경우
+            if(dialog.isRegistered()) {
+                GoodsVO newGoods = dialog.getGoodsVO();
+                
+                // 1. DB에 추가
+                dao.goodsInsert(newGoods);
+                
+                // 2. 테이블 목록 새로고침 (가장 맨 뒤에 추가된 항목이 보이게 됨)
+                print(); 
+                
+                cp.hp.refresh();
+            }
         });
         
         print(); // 마지막에 한번만 호출
@@ -94,6 +112,7 @@ public class GoodsControlForm extends JPanel implements MouseListener {
         	    {
         	        dao.goodsDelete(no);
         	        print();
+        	        cp.hp.refresh();
         	    }
         	}
         }
